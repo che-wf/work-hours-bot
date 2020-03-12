@@ -11,6 +11,7 @@ config.read('config.ini')
 toggl = Toggl()
 
 TogglConfig = config['Toggl']
+SettingsConfig = config['Settings']
 
 if TogglConfig['auth_token']:
     print('Using Toggl token for authentication')
@@ -22,13 +23,9 @@ else:
     raise Exception('Please configure your Toggl authentication.')
 
 
-# Every 5 min, check the timer
-# If the timer is still the same value as last, don't change it
-# If it is different, change the display to the opposite view
-# and change the status value
 
+# Timer
 working = False
-# display not working
 
 while True:
 
@@ -40,5 +37,4 @@ while True:
     elif currentEntry["data"] != None and working == False:
         working = True
         print("Working")
-    time.sleep(5)
-    # time.sleep(5 * 60)
+    time.sleep(int(SettingsConfig['interval']))
